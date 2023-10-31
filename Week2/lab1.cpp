@@ -53,7 +53,7 @@ int main() {
     myStack.Push(1);
     myStack.Push(2);
     myStack.Push(3);
-    myStack.Push(4); // You added an extra push, but the stack size is 3
+    myStack.Push(4);
 
     int topElement = myStack.Peek();
     if (topElement != -1) {
