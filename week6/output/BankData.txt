@@ -1,0 +1,7 @@
+User 1
+User Account details are: 
+/nUser Name: e3dsf
+User CNIC: 45353535354
+Account Pin: 9999
+Account Balance: 345345
+
