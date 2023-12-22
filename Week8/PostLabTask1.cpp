@@ -1,139 +1,155 @@
 #include <iostream>
-#include <vector>
 using namespace std;
 
-class TreeNode {
-public:
-    int key;
-    TreeNode* left;
-    TreeNode* right;
-
-    TreeNode(int value) : key(value), left(nullptr), right(nullptr) {}
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
 };
 
 class BST {
 private:
-    TreeNode* root;
+    Node* root;
 
-public:
-    BST() : root(nullptr) {}
-
-    void insert(int key) {
-        root = _insert(root, key);
+    Node* createNode(int data) {
+        Node* newNode = new Node();
+        if (newNode) {
+            newNode->data = data;
+            newNode->left = newNode->right = nullptr;
+        }
+        return newNode;
     }
 
-    TreeNode* _insert(TreeNode* root, int key) {
+    Node* insertNode(Node* root, int data) {
         if (root == nullptr) {
-            return new TreeNode(key);
+            root = createNode(data);
         }
-        if (key < root->key) {
-            root->left = _insert(root->left, key);
-        } else if (key > root->key) {
-            root->right = _insert(root->right, key);
+        else if (data <= root->data) {
+            root->left = insertNode(root->left, data);
+        }
+        else {
+            root->right = insertNode(root->right, data);
         }
         return root;
     }
 
-    void deleteNode(int key) {
-        root = _delete(root, key);
-    }
-
-    TreeNode* _delete(TreeNode* root, int key) {
+    Node* deleteNode(Node* root, int data) {
         if (root == nullptr) {
             return root;
         }
-        if (key < root->key) {
-            root->left = _delete(root->left, key);
-        } else if (key > root->key) {
-            root->right = _delete(root->right, key);
-        } else {
-            if (root->left == nullptr) {
-                TreeNode* temp = root->right;
+        else if (data < root->data) {
+            root->left = deleteNode(root->left, data);
+        }
+        else if (data > root->data) {
+            root->right = deleteNode(root->right, data);
+        }
+        else {
+            if (root->left == nullptr && root->right == nullptr) {
                 delete root;
-                return temp;
-            } else if (root->right == nullptr) {
-                TreeNode* temp = root->left;
-                delete root;
-                return temp;
+                root = nullptr;
             }
-            root->key = getMinValue(root->right);
-            root->right = _delete(root->right, root->key);
+            else if (root->left == nullptr) {
+                Node* temp = root;
+                root = root->right;
+                delete temp;
+            }
+            else if (root->right == nullptr) {
+                Node* temp = root;
+                root = root->left;
+                delete temp;
+            }
+            else {
+                Node* temp = findMin(root->right);
+                root->data = temp->data;
+                root->right = deleteNode(root->right, temp->data);
+            }
         }
         return root;
     }
 
-    int getMinValue(TreeNode* root) {
+    Node* findMin(Node* root) {
         while (root->left != nullptr) {
             root = root->left;
         }
-        return root->key;
+        return root;
+    }
+
+    void preOrderTraversal(Node* root) {
+        if (root == nullptr) {
+            return;
+        }
+        cout << root->data << " ";
+        preOrderTraversal(root->left);
+        preOrderTraversal(root->right);
+    }
+
+    int calculateDepth(Node* root){
+        if(root == nullptr){
+            return 0;
+        }
+        else{
+            int leftDepth = calculateDepth(root->left);
+            int rightDepth = calculateDepth(root->right);
+
+            if(leftDepth > rightDepth){
+                return leftDepth + 1;
+            }
+            else{
+                return rightDepth + 1;
+            }
+        }
+    }
+
+public:
+    BST() {
+        root = nullptr;
+    }
+
+    void insert(int data) {
+        root = insertNode(root, data);
+    }
+
+
+    void remove(int data) {
+        root = deleteNode(root, data);
     }
 
     int depth() {
-        return _depth(root);
+        return calculateDepth(root);
     }
-
-    int _depth(TreeNode* root) {
-        if (root == nullptr) {
-            return 0;
-        }
-        int leftDepth = _depth(root->left);
-        int rightDepth = _depth(root->right);
-        return max(leftDepth, rightDepth) + 1;
-    }
-
-    void preOrderTraversal(vector<int>& result) {
-        _preOrderTraversal(root, result);
-    }
-
-    void _preOrderTraversal(TreeNode* root, vector<int>& result) {
-        if (root != nullptr) {
-            result.push_back(root->key);
-            _preOrderTraversal(root->left, result);
-            _preOrderTraversal(root->right, result);
-        }
+    
+    void preOrder() {
+        preOrderTraversal(root);
     }
 };
 
 int main() {
     BST bst;
-    vector<int> numbers = {11, 67, 22, 83, 47, 15, 18, 16, 64, 30};
 
-    // Insert numbers into the BST
-    for (int num : numbers) {
-        bst.insert(num);
-    }
+    // Inserting nodes
+    bst.insert(11);
+    bst.insert(67);
+    bst.insert(22);
+    bst.insert(83);
+    bst.insert(47);
+    bst.insert(15);
+    bst.insert(18);
+    bst.insert(16);
+    bst.insert(64);
+    bst.insert(30);
 
-    // Draw and Identify depth of the tree
-    int depth = bst.depth();
-    cout << "Depth of the BST: " << depth << endl;
+    // Deleting nodes
+    bst.remove(11);
+    bst.remove(67);
+    bst.remove(22);
+    bst.remove(83);
 
-    // Traverse BST using pre-order traversal
-    vector<int> traversalResult;
-    bst.preOrderTraversal(traversalResult);
-    cout << "Pre-order Traversal: ";
-    for (int num : traversalResult) {
-        cout << num << " ";
-    }
-    cout << endl;
+    // Depth of the tree
+    cout << "Depth of the tree: " << bst.depth() << endl;
 
-    // Delete 4 nodes
-    vector<int> nodesToDelete = {22, 47, 64, 18};
-    for (int node : nodesToDelete) {
-        bst.deleteNode(node);
-    }
-
-    // Draw and Identify depth of the tree after deletion
-    int depthAfterDeletion = bst.depth();
-    cout << "Depth of the BST after deletion: " << depthAfterDeletion << endl;
-
-    // Traverse BST using pre-order traversal after deletion
-    vector<int> traversalResultAfterDeletion;
-    bst.preOrderTraversal(traversalResultAfterDeletion);
-    cout << "Pre-order Traversal after deletion: ";
-    for (int num : traversalResultAfterDeletion) {
-        cout << num << " ";
-    }
+    // Pre-order traversal
+    cout << "Pre-order traversal: ";
+    bst.preOrder();
     cout << endl;
 
     return 0;
