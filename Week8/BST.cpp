@@ -45,8 +45,6 @@ int main(){
     insertBST(root, 7);
 
     cout<<"Binary Search Tree Root Node:"<<root->data<<endl;
-    //printing a whole tree
-
 
     cout<<"Inorder: ";
     //print inorder
