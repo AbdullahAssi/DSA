@@ -29,7 +29,21 @@ public:
     }
 
     //function to delete a value from queue
-    
+    void dequeue(){
+        if(front == -1){
+            cout<<"Queue is empty cant dequeue"<<endl;
+            return;
+        }
+        else if(front == rear ) {
+            cout<<queue[front]<<" Dequeued from circular queue :";
+            front = rear = -1;
+        }
+        else{
+            cout<<queue[front]<<" Dequeued from circular queue : "<<endl;
+            front = (front+1)% max_size;
+        }
+
+    }
 };
 
 int main() {
@@ -41,5 +55,7 @@ int main() {
     cq.enqueue(5);
     cq.enqueue(6); // This will print "Queue is full: Can't Insert 6"
 
+    cq.dequeue();
+    cq.dequeue();
     return 0;
 }
