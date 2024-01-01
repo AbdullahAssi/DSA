@@ -35,11 +35,11 @@ public:
             return;
         }
         else if(front == rear ) {
-            cout<<queue[front]<<" Dequeued from circular queue :";
+            cout<<queue[front]<<" Dequeued from circular queue ";
             front = rear = -1;
         }
         else{
-            cout<<queue[front]<<" Dequeued from circular queue : "<<endl;
+            cout<<queue[front]<<" Dequeued from circular queue "<<endl;
             front = (front+1)% max_size;
         }
 
@@ -50,12 +50,15 @@ int main() {
     CircularQueue cq;
     cq.enqueue(1);
     cq.enqueue(2);
+    cq.dequeue();
     cq.enqueue(3);
-    cq.enqueue(4);
     cq.enqueue(5);
-    cq.enqueue(6); // This will print "Queue is full: Can't Insert 6"
+    cq.enqueue(7);
+    cq.dequeue();
+    cq.dequeue();
+    cq.enqueue(10);
+    cq.enqueue(20);
+    cq.enqueue(30); // This will print "Queue is full: Can't Insert 30"
 
-    cq.dequeue();
-    cq.dequeue();
     return 0;
 }
