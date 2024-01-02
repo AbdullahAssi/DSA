@@ -4,10 +4,10 @@ using namespace std;
 
 class Node {
 public:
-    double data;
+    int data;
     Node* next;
 
-    Node(double value) : data(value), next(nullptr) {}
+    Node(int value) : data(value), next(nullptr) {}
 };
 
 class List {
@@ -18,7 +18,7 @@ public:
     List() : head(nullptr) {}
 
     // Function to insert a node at the beginning
-    Node* InsertNodeAtBeginning(double x) {
+    Node* InsertNodeAtBeginning(int x) {
         Node* newNode = new Node(x);
         newNode->next = head;
         head = newNode;
@@ -26,7 +26,7 @@ public:
     }
 
     // Function to insert a node at the middle
-    Node* InsertNodeAtMiddle(int index, double x) {
+    Node* InsertNodeAtMiddle(int index, int x) {
         if (index < 0) {
             return nullptr;
         }
@@ -46,8 +46,17 @@ public:
         return newNode;
     }
 
+    //function to search exisiting element in linked list
+    Node* search(int x) {
+        Node* currNode = head;
+        while (currNode && currNode->data != x) {
+            currNode = currNode->next;
+        }
+        return currNode;
+    }
+
     // Function to insert a node at the end
-    Node* InsertNodeAtEnd(double x) {
+    Node* InsertNodeAtEnd(int x) {
         Node* newNode = new Node(x);
 
         if (head == nullptr) {
@@ -75,7 +84,7 @@ public:
     }
 
     // Function to find a node by value and return its index (1-based)
-    int FindNode(double x) {
+    int FindNode(int x) {
         Node* currNode = head;
         int currIndex = 1;
         while (currNode && currNode->data != x) {
@@ -90,29 +99,39 @@ public:
 int main() {
     List myList;
 
-    myList.InsertNodeAtEnd(1.1);
-    myList.InsertNodeAtEnd(2.2);
-    myList.InsertNodeAtEnd(3.3);
+    myList.InsertNodeAtEnd(1);
+    myList.InsertNodeAtEnd(2);
+    myList.InsertNodeAtEnd(3);
 
     cout << "Original Linked List: ";
     myList.Display();
 
-    myList.InsertNodeAtBeginning(0.0);
+    myList.InsertNodeAtBeginning(0);
     cout << "Linked List after insertion at the beginning: ";
     myList.Display();
 
-    myList.InsertNodeAtMiddle(2, 1.5);
+    myList.InsertNodeAtMiddle(2, 1);
     cout << "Linked List after insertion at index 2: ";
     myList.Display();
 
-    myList.InsertNodeAtEnd(4.4);
+    myList.InsertNodeAtEnd(4);
     cout << "Linked List after insertion at the end: ";
     myList.Display();
 
     // Find a node with value 2.2 and print its index
-    double valueToFind = 2.2;
+    int valueToFind = 3;
     int foundIndex = myList.FindNode(valueToFind);
     cout << "Index of node with value " << valueToFind << ": " << foundIndex << endl;
+
+    int valueToSearch = 3;
+    Node* foundNode = myList.search(valueToSearch);
+    if (foundNode) {
+        cout << "Found node with value " << valueToSearch << endl;
+    }
+    else {
+        cout << "Node with value " << valueToSearch << " not found" << endl;
+    }
+
 
     return 0;
 }
