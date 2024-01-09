@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/DSA/Prac",
-      "program": "d:/DSA/Prac/build/Debug/outDebug",
+      "cwd": "d:/DSA/OEL/OEL2",
+      "program": "d:/DSA/OEL/OEL2/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
