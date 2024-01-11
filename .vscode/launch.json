@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/DSA/OEL/OEL2",
-      "program": "d:/DSA/OEL/OEL2/build/Debug/outDebug",
+      "cwd": "d:/DSA/Week10",
+      "program": "d:/DSA/Week10/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
