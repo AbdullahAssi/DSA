@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": true,
-      "cwd": "d:/DSA/Week11",
-      "program": "d:/DSA/Week11/build/Debug/outDebug",
+      "cwd": "d:/DSA/Week12",
+      "program": "d:/DSA/Week12/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
