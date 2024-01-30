@@ -66,6 +66,9 @@ public:
 int main() {
     Graph graph(5);
 
+    // Print the initial graph
+    cout << "Graph initially: \n";
+    graph.printGraph();
 
     try {
         graph.insertEdge(2, 1);
@@ -75,9 +78,6 @@ int main() {
         cerr << "Error: " << e.what() << endl;
     }
 
-    // Print the initial graph
-    cout << "Graph initially: \n";
-    graph.printGraph();
 
     // Insert a new vertex
     graph.insertVertex();
